@@ -26,7 +26,7 @@ background-repeat-y: no-repeat;
  /* Espaço chat deve ficar lado esquedo da página */
  --right-chat: 20px;
  --width-chat: 350px;
- --height-chat: 340px;
+ --height-chat: 365px;
  --height-footer-textarea: 272px; /* deve ter 68px a menos do que "height-chat" */
 
  /* Cor do balão do usuário 'a' */
@@ -201,14 +201,17 @@ background-repeat-y: no-repeat;
   border: none;
   border-radius: 2px;
   display: inline-block;
-  height: 36px;
-  line-height: 36px;
-  padding: 0 2rem;
+  height: 20px;
+  line-height: 20px;
+  margin-bottom: 3px;
   text-transform: uppercase;
   vertical-align: middle;
   -webkit-tap-highlight-color: transparent;
 }
 
+.btn-be4chat-img {
+  margin-left: 10px;
+}
 
 input.input-be4chat:focus {
   border-bottom: 1px solid #26a69a;

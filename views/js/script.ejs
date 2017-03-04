@@ -94,7 +94,45 @@ var be4_chat_name, be4_chat_email, be4_chat_phone;
       connectWebSocket(name, email, phone)
     }
    });
+  document.querySelector(".inputs").remove();
 
+  document.querySelector('#myprotocol').addEventListener('click',function(){
+
+    var xhttp = new XMLHttpRequest();
+    xhttp.onreadystatechange = function() {
+      if (this.readyState == 4 && this.status == 200) {
+        var protocols = 'Seus Protocolos <br/><br/>';
+        var json = JSON.parse(this.responseText);
+        for (var i = 0; i < json.length; i++) {
+          protocols += '<strong>'+json[i].protocol+'</strong><br/>';
+          protocols += json[i].category+'<br/>';
+          protocols += formatDate(json[i].created_at)+'<br/>';
+          protocols += '______________<br/>';
+        }
+        var msgPush = document.getElementsByClassName("msg_push")[0];
+        msgPush.parentNode.insertBefore(createElementMsg(protocols, "msg_a"), msgPush);
+      }
+    };
+    xhttp.open("GET", 'http://localhost:8000/client/findByCpf/01640521607', true);
+    xhttp.setRequestHeader("Content-type", "application/json");
+    xhttp.send(JSON.stringify(data));
+
+  });
+  function formatDate(dateString) {
+    var date = new Date(dateString)
+    var monthNames = [
+      "Janeiro", "Fevereiro", "Marco",
+      "Abril", "Maio", "Junho", "Julho",
+      "Agosto", "Setembro", "Outubro",
+      "Novembro", "Dezembro"
+    ];
+
+    var day = date.getDate();
+    var monthIndex = date.getMonth();
+    var year = date.getFullYear();
+
+    return day + ' ' + monthNames[monthIndex] + ' ' + year;
+  }
   // ***********************************************************************************************
 // *****************************************WEBSOCKET*********************************************
 // ***********************************************************************************************

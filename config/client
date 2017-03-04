@@ -1,0 +1,13 @@
+const express = require('express'),
+	router = express.Router(),
+	clientController = require('../controllers/client');
+
+router.route('/save').get(function(req, res) {
+	clientController.insert
+})
+
+router.route('/findByPhone/:id').put(function(req, res) {
+	clientController.findByPhone
+})
+
+module.exports = router

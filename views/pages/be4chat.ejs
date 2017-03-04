@@ -2,7 +2,7 @@
 <html>
 <head>
   <title>Be4Chat</title>
-  
+  <meta charset="UTF-8">
 
   <link href="<%= URL %>/css/style.css" rel="stylesheet" type="text/css">
   <!-- WebSocket -->
@@ -51,11 +51,18 @@
 
   		 <div class="msg_wrap">
   			<div class="msg_body">
-
+        <div class="msg_a">Ola, seja bem vindo ao chat da Algar Telecom!</div>
+        <div class="msg_a">Em que podemos ajudar?</div>
   				<div class="msg_push"></div>
+
   			</div>
 
+         <input id="myprotocol" type="image" class="btn-be4chat-img" src="http://localhost:8000/img/protocol.png" width="20" height="20" title="Meus Protocolos" />
+
+         <input type="image" class="btn-be4chat-img" src="http://localhost:8000/img/attach.png" width="20" height="20" title="Anexar Arquivo" />
+                    
   			<div class="msg_footer">
+          
   				<hr class="hr_footer"/>
 
   				<div class="row">
