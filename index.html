@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Novo mundo</title>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+
+</head>
+<body>
+
+<div id="chat_be4"></idv>
+<script>
+		var data = {
+	        img: 'https://bower.io/img/bower-logo.png',
+	        altura: 50,
+	        largura: 60
+		}; 
+	    $.post({
+		  url: "http://localhost:8000/be4chat",
+		  data: data,
+		  dataType: "html",
+		  success: function(data) {
+		    $("#chat_be4").html(data);
+		  }
+		});
+</script>
+
+<!-- <script>
+	sendMsg();
+	function sendMsg() {
+	  var xhttp = new XMLHttpRequest();
+	  xhttp.onreadystatechange = function() {
+	    if (this.readyState == 4 && this.status == 200) {
+	      //$("#chat_be4").html(this.responseText);
+	      var parser = new DOMParser()
+	      var element = parser.parseFromString(this.responseText, 'text/html')
+	      console.log(element);
+	      document.getElementById("chat_be4").outerHTML = element;
+	    }
+	  };
+	  xhttp.open("GET", "http://localhost:8000/load/chat", true);
+	  xhttp.setRequestHeader('Content-Type', 'utf8');
+	  xhttp.send();
+	}
+</script> -->
+
+<!-- <script>
+		loadDoc();
+		function loadDoc() {
+		  var xhttp = new XMLHttpRequest();
+		  xhttp.onreadystatechange = function() {
+		    if (this.readyState == 4 && this.status == 200) {
+		     document.getElementById("chat_be4").innerHTML = this.responseText;
+		    }
+		  };
+		  xhttp.open("GET", "http://localhost:8000/html/index.html", true);
+		  xhttp.send();
+		}
+	    
+</script> -->
+
+<!-- <script>
+		loadDoc();
+		function loadDoc() {
+		  var xhttp = new XMLHttpRequest();
+		  xhttp.onreadystatechange = function() {
+		    if (this.readyState == 4 && this.status == 200) {
+		     document.getElementById("chat_be4").innerHTML = this.responseText;
+		    }
+		  };
+		  xhttp.open("GET", "http://localhost:8000/html/index.html", true);
+		  xhttp.send();
+		}
+	    
+</script> -->
+
+</body>
+</html>

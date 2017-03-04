@@ -1,3 +1,9 @@
+body {
+    background-image: url("http://localhost:8000/img/algar.png");
+    background-repeat-x: no-repeat;
+background-repeat-y: no-repeat;
+}
+
 :root {
  /* Cor de fundo da pagina */
  --color-background-body: #16a085;
