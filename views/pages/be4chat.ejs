@@ -18,11 +18,11 @@
 <body>
 
 <div id="chat_box" class="chat_box" >
-<img class="be4chat_logo_img" src="<%= img %>" height="<%= imgHeight %>" width="<%= imgWidth %>">
-    <center>
-  		<div class="chat_head">Posso ajudar ?</div>
-  	</center>
-  	<img class="arrow_down_img" id="arrow_img" src="http://localhost:8000/img/arrow_down.png" height="20" width="20">
+    <img class="be4chat_logo_img" src="<%= img %>" height="<%= imgHeight %>" width="<%= imgWidth %>">
+  		<div class="chat_head">
+				Posso lhe ajudar?
+			</div>
+  	
   	<div class="chat_body">
   		<form id="chatBe4Form">
   	    	<div class="inputs">
@@ -63,12 +63,10 @@
                     
   			<div class="msg_footer">
           
-  				<hr class="hr_footer"/>
 
   				<div class="row">
-  			          <textarea class="textarea-be4chat" rows="2" resize: none;></textarea>
-                  <img class="msg_send_img" src="http://localhost:8000/img/send.png" >
-  			      </div>
+						<textarea class="textarea-be4chat" placeholder="Digite sua mensagem" rows="2" resize: none;></textarea>
+  			  </div>
   			</div>
   		</div>
   		</div>
