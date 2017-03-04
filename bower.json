@@ -1,0 +1,19 @@
+{
+  "name": "websocket-chat",
+  "description": "",
+  "main": "server.js",
+  "authors": [
+    "victorcpeixoto <victorcmggg@gmail.com>"
+  ],
+  "license": "ISC",
+  "homepage": "",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+  }
+}

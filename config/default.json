@@ -1,0 +1,9 @@
+{
+    "appSecret": "5e54a5ddea3133c4e70487c811fb47c9",
+    "pageAccessToken": "EAAXrbr3ZBhEsBAEmCaf647QhJ5o6S1puf8MNrIypA5ERo3sjCSJgshewvZB34smza2D0ZCYK7tR2BZAmXeiNT9ZCkhW9YK3kKX276vvRZBynEanBraq4IzrxPtwnJMAUP4eCNhNDSkdnRG5O4ZBUy0Rm3yyNhyF8uce7ZAHocNnZBTQZDZD",
+    "validationToken": "n3pp0t1",
+    "chatURL": "http://localhost:8080/chat/ws?sessionId=",
+    "chatGroup": "FACEBOOK",
+    "webdavHost": "http://oficina.neppo.com.br/storage",
+    "URL": "http://localhost:8000"
+}

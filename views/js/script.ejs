@@ -1,0 +1,276 @@
+var be4_chat_name, be4_chat_email, be4_chat_phone;
+
+//document.addEventListener('DOMContentLoaded',function(){
+  document.getElementById("phone").onkeypress = validate_int;
+  document.getElementById("phone").onkeyup = phone_number_mask;
+  // ***********************************************************************************************
+  // *********************************   Abrir e Fechar Aba Chat   *********************************
+  // ***********************************************************************************************
+  var divs = document.querySelectorAll(".chat_head, .arrow_down_img, .logo_img");
+  divs[0].addEventListener('click', function(div) {
+    slideToggle();
+    
+    var transform = document.getElementById("arrow_img").style.transform == '' ? "rotate(180deg)" : '';
+    
+    if(transform != ''){
+      document.getElementById("arrow_img").style.transform = transform;
+      document.querySelector(".chat_head").style.width = '50%'; 
+      document.querySelector(".be4chat_logo_img").style.visibility = 'hidden'; 
+      document.querySelector(".arrow_down_img").style.right = '95px';
+      document.querySelector(".chat_box").style.right = '-60px';
+      
+      
+      
+    }else{
+      document.getElementById("arrow_img").style.transform = transform;
+      document.querySelector(".chat_head").style.width = '95%';
+      document.querySelector(".be4chat_logo_img").style.visibility = 'visible ';
+      document.querySelector(".arrow_down_img").style.right = '20px';
+      document.querySelector(".chat_box").style.right = '20px';
+    }
+    
+  });
+
+  // ***********************************************************************************************
+  // ***********************************************************************************************
+  // ***********************************************************************************************
+  function isValidEmailAddress(emailAddress) {
+    var pattern = /^([a-z\d!#$%&'*+\-\/=?^_`{|}~\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF]+(\.[a-z\d!#$%&'*+\-\/=?^_`{|}~\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF]+)*|"((([ \t]*\r\n)?[ \t]+)?([\x01-\x08\x0b\x0c\x0e-\x1f\x7f\x21\x23-\x5b\x5d-\x7e\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF]|\\[\x01-\x09\x0b\x0c\x0d-\x7f\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF]))*(([ \t]*\r\n)?[ \t]+)?")@(([a-z\d\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF]|[a-z\d\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF][a-z\d\-._~\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF]*[a-z\d\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])\.)+([a-z\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF]|[a-z\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF][a-z\d\-._~\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF]*[a-z\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])\.?$/i;
+    var bool = pattern.test(emailAddress);
+    return bool
+  };
+  function validate (name, email, phone){
+    var valid = true;
+    if(name.length != 0){
+        //$j3('.span-name').hide();
+
+        rmClass("name", "input-be4chat-error");
+        addClass("name", "input-be4chat");
+    } else {
+        rmClass("name", "input-be4chat");
+        addClass("name", "input-be4chat-error");
+        valid = false;
+    }
+
+    if(email.length == 0 || !isValidEmailAddress(email)){
+        rmClass("email", "input-be4chat");
+        addClass("email", "input-be4chat-error");
+        valid = false;
+    } else {
+        rmClass("email", "input-be4chat-error");
+        addClass("email", "input-be4chat");
+    }
+
+    if(phone.length == 11){
+      rmClass("phone", "input-be4chat-error");
+      addClass("phone", "input-be4chat");
+    } else {
+      rmClass("phone", "input-be4chat");
+      addClass("phone", "input-be4chat-error");
+        valid = false;
+    }
+    return valid
+  }
+
+  var classname = document.getElementsByClassName("validate");
+  for (var i = 0; i < classname.length; i++) {
+    classname[i].addEventListener('click', function(){
+      var name = document.getElementById('name').value;
+      var email = document.getElementById('email').value;
+      var phone = document.getElementById('phone').value.replace('(','').replace(')','').replace(' ','').replace('-','');
+      validate(name, email, phone);
+    }, false);
+  }
+
+  document.querySelector('.startchat').addEventListener('click',function(){
+
+    var name = document.getElementById('name').value;
+    var email = document.getElementById('email').value;
+    var phone = document.getElementById('phone').value.replace('(','').replace(')','').replace(' ','').replace('-','');
+
+    if(validate(name, email, phone)){
+      document.querySelector(".inputs").remove();
+      // Iniciar conexão com chat (websocket)
+      connectWebSocket(name, email, phone)
+    }
+   });
+
+  // ***********************************************************************************************
+// *****************************************WEBSOCKET*********************************************
+// ***********************************************************************************************
+
+function connectWebSocket(name, email, phone){
+    be4_chat_name = name
+    be4_chat_email = email
+    be4_chat_phone = phone
+
+    var webSocket = io.connect(URL, { uuid: be4_chat_phone, 'forceNew': true, perMessageDeflate: false})
+
+    webSocket.on("connect", function(){
+      console.log('Websocket aberto: ' + be4_chat_phone);
+      webSocket.send(be4_chat_phone);
+
+      var data = {"message": "-- sem mensagem --", "uuid": be4_chat_phone, "name": be4_chat_name, "email": be4_chat_email, "phone": be4_chat_phone};
+      sendMsg(URL+"/msg", data)
+    });
+
+    webSocket.on("message", function(msg){
+      
+      var msgPush = document.getElementsByClassName("msg_push")[0];
+      msgPush.parentNode.insertBefore(createElementMsg(msg, "msg_a"), msgPush);
+
+      scrollTopChatBody();
+
+    });
+}
+
+function insertInput(msg){
+
+  var data = {"message": msg, "uuid": be4_chat_phone, "name": be4_chat_name, "email": be4_chat_email, "phone": be4_chat_phone};
+  sendMsg(URL+"/msg", data)
+
+  if(msg!=''){
+    var msgPush = document.getElementsByClassName("msg_push")[0];
+      msgPush.parentNode.insertBefore(createElementMsg(msg, "msg_b"), msgPush);
+  }
+  scrollTopChatBody();
+
+}
+
+document.querySelector('.textarea-be4chat').addEventListener('keypress',
+  function(e){
+    if (e.keyCode == 13) {
+        e.preventDefault();
+        insertInput(this.value);
+        this.value = '';
+    }
+});
+
+document.querySelector('.msg_send_img').addEventListener('click',
+function(){
+    var msg = document.querySelector('.textarea-be4chat').value;
+    insertInput(msg);
+    document.querySelector('.textarea-be4chat').value = '';
+});
+
+
+ //});
+
+function sendMsg(URL, data) {
+  var xhttp = new XMLHttpRequest();
+  xhttp.onreadystatechange = function() {
+    if (this.readyState == 4 && this.status == 200) {
+      //console.log(this.responseText)
+    }
+  };
+  xhttp.open("POST", URL, true);
+  xhttp.setRequestHeader("Content-type", "application/json");
+  xhttp.send(JSON.stringify(data));
+}
+
+  var open = true;
+  var heightChecked = false;
+  var initHeight = 0;
+  var intval = null;
+
+  function slideToggle() {
+      window.clearInterval(intval);
+      var mdiv = document.getElementById('chat_box');
+      if(!heightChecked) {
+          initHeight = mdiv.offsetHeight;
+          heightChecked = true;
+      }
+      if(open) {
+          var h = initHeight;
+          open = false;
+          
+          intval = setInterval(function () {
+              h = h - 5;
+              mdiv.style.height = h + 'px';
+              if(h <= 35)
+                  window.clearInterval(intval);
+          }, 1);
+      }
+      else {
+          var h = 0;
+          open = true;
+          intval = setInterval(function(){
+              h = h + 5;
+              mdiv.style.height = h + 'px';
+              if(h >= initHeight)
+                  window.clearInterval(intval);
+              }, 1
+          );
+      }
+  }
+
+function createElementMsg(msg, nameClass){
+  var element = document.createElement('div');
+  element.innerHTML = '<div class="'+nameClass+'">'+msg+'</div>'
+  return element;
+}
+
+function scrollTopChatBody(){
+  var scroll = document.getElementsByClassName("msg_body")[0];
+  scroll.scrollTop = scroll.scrollHeight;
+}
+
+function addClass (elementId, className) {
+  document.getElementById(elementId).classList.add(className);
+}
+
+function rmClass (elementId, className) {
+  document.getElementById(elementId).classList.remove(className);     
+}
+
+
+/********* Phone Mask **************
+ ** 
+ * charCode [48,57]   Numbers 0 to 9
+ * keyCode 46       "delete"
+ * keyCode 9        "tab"
+ * keyCode 13       "enter"
+ * keyCode 116      "F5"
+ * keyCode 8        "backscape"
+ * keyCode 37,38,39,40  Arrows
+ * keyCode 10     (LF)
+ */
+function validate_int(myEvento) {
+  if ((myEvento.charCode >= 48 && myEvento.charCode <= 57) || myEvento.keyCode == 9 || myEvento.keyCode == 10 || myEvento.keyCode == 13 || myEvento.keyCode == 8 || myEvento.keyCode == 116 || myEvento.keyCode == 46 || (myEvento.keyCode <= 40 && myEvento.keyCode >= 37)) {
+    dato = true;
+  } else {
+    dato = false;
+  }
+  return dato;
+}
+
+function phone_number_mask() {
+  var myMask = "(__) _____-____";
+  var myCaja = document.getElementById("phone");
+  var myText = "";
+  var myNumbers = [];
+  var myOutPut = ""
+  var theLastPos = 1;
+  myText = myCaja.value;
+  //get numbers
+  for (var i = 0; i < myText.length; i++) {
+    if (!isNaN(myText.charAt(i)) && myText.charAt(i) != " ") {
+      myNumbers.push(myText.charAt(i));
+    }
+  }
+  //write over mask
+  for (var j = 0; j < myMask.length; j++) {
+    if (myMask.charAt(j) == "_") { //replace "_" by a number 
+      if (myNumbers.length == 0)
+        myOutPut = myOutPut + myMask.charAt(j);
+      else {
+        myOutPut = myOutPut + myNumbers.shift();
+        theLastPos = j + 1; //set caret position
+      }
+    } else {
+      myOutPut = myOutPut + myMask.charAt(j);
+    }
+  }
+  document.getElementById("phone").value = myOutPut;
+  document.getElementById("phone").setSelectionRange(theLastPos, theLastPos);
+}
