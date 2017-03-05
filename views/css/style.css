@@ -100,7 +100,7 @@ li{
 	width: 90% !important;
 }
 
-.input-field-be4chat label{
+.input-field-hackathon label{
 	font-size: 0.8rem !important;
 }
 
@@ -220,7 +220,7 @@ li{
     cursor: pointer;
 }
 
-.be4chat_logo_img {
+.hackathon_logo_img {
 	position: absolute;
   left: 140px;
   top: -30px;
@@ -265,7 +265,7 @@ li{
 /************************************************************************************************/
 /************************************************************************************************/
 
-.btn-be4chat {
+.btn-hackathon {
   border: none;
   border-radius: 2px;
   display: inline-block;
@@ -277,21 +277,21 @@ li{
   -webkit-tap-highlight-color: transparent;
 }
 
-.btn-be4chat-img {
+.btn-hackathon-img {
   margin-left: 10px;
 }
 
-input.input-be4chat:focus {
+input.input-hackathon:focus {
   border-bottom: 1px solid #26a69a;
   box-shadow: 0 1px 0 0 #26a69a;
 }
 
-input.input-be4chat-error {
+input.input-hackathon-error {
   border-bottom: 1px solid red;
   box-shadow: 0 1px 0 0 red;
 }
 
-.input-field-be4chat {
+.input-field-hackathon {
   position: relative;
   margin-top: 1rem;
   width: 81% !important;
@@ -299,19 +299,19 @@ input.input-be4chat-error {
   height: 59px !important;
 }
 
-.input-field-be4chat label:not(.label-icon).active {
+.input-field-hackathon label:not(.label-icon).active {
   font-size: 0.8rem;
   -webkit-transform: translateY(-140%);
           transform: translateY(-140%);
 }
 
-.input-field-be4chat button {
+.input-field-hackathon button {
   position: absolute;
   left: 27%;
 }
 
 
-.input-field-be4chat label {
+.input-field-hackathon label {
   color: #26a69a;
   position: absolute;
   top: 0.8rem;
@@ -339,7 +339,7 @@ input.input-be4chat-error {
   padding: 2px 0 0 0;
 }
 
-.textarea-be4chat{
+.textarea-hackathon{
   background-color: transparent;
   border-bottom: 1px solid #9e9e9e;
   border-radius: 3px;
@@ -358,6 +358,6 @@ input.input-be4chat-error {
   font-family: 'chantilly-serial-lightregular', Arial, Helvetica, sans-serif;
 }
 
-textarea.textarea-be4chat:focus {
+textarea.textarea-hackathon:focus {
   border: 1px solid #26a69a;
 }

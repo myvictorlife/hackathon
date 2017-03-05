@@ -8,15 +8,15 @@ var URL = "https://chatvictor.mybluemix.net/chat"
   // ***********************************************************************************************
   // *********************************   Abrir e Fechar Aba Chat   *********************************
   // ***********************************************************************************************
-  document.querySelector(".btn-be4chat-img").disabled = true;
+  document.querySelector(".btn-hackathon-img").disabled = true;
 
-  var divs = document.querySelectorAll("#myprotocol, .btn-be4chat-img");
+  var divs = document.querySelectorAll("#myprotocol, .btn-hackathon-img");
   divs[0].addEventListener('click', function(div) {
-    document.querySelector(".btn-be4chat-img").disabled = true;
+    document.querySelector(".btn-hackathon-img").disabled = true;
   });
 
 
-  var divs = document.querySelectorAll(".chat_head, .arrow_down_img, .logo_img, .be4chat_logo_img");
+  var divs = document.querySelectorAll(".chat_head, .arrow_down_img, .logo_img, .hackathon_logo_img");
   divs[0].addEventListener('click', function(div) {
     slideToggle();
     
@@ -25,7 +25,7 @@ var URL = "https://chatvictor.mybluemix.net/chat"
     if(transform != ''){
       document.getElementById("arrow_img").style.transform = transform;
       document.querySelector(".chat_head").style.width = '50%'; 
-      document.querySelector(".be4chat_logo_img").style.visibility = 'hidden';
+      document.querySelector(".hackathon_logo_img").style.visibility = 'hidden';
       document.querySelector(".arrow_down_img").style.right = '95px';
       document.querySelector(".chat_box").style.right = '-60px';
       
@@ -34,7 +34,7 @@ var URL = "https://chatvictor.mybluemix.net/chat"
     }else{
       document.getElementById("arrow_img").style.transform = transform;
       document.querySelector(".chat_head").style.width = '95%';
-      document.querySelector(".be4chat_logo_img").style.visibility = 'visible ';
+      document.querySelector(".hackathon_logo_img").style.visibility = 'visible ';
       document.querySelector(".arrow_down_img").style.right = '20px';
       document.querySelector(".chat_box").style.right = '20px';
     }
@@ -54,29 +54,29 @@ var URL = "https://chatvictor.mybluemix.net/chat"
     if(name.length != 0){
         //$j3('.span-name').hide();
 
-        rmClass("name", "input-be4chat-error");
-        addClass("name", "input-be4chat");
+        rmClass("name", "input-hackathon-error");
+        addClass("name", "input-hackathon");
     } else {
-        rmClass("name", "input-be4chat");
-        addClass("name", "input-be4chat-error");
+        rmClass("name", "input-hackathon");
+        addClass("name", "input-hackathon-error");
         valid = false;
     }
 
     if(email.length == 0 || !isValidEmailAddress(email)){
-        rmClass("email", "input-be4chat");
-        addClass("email", "input-be4chat-error");
+        rmClass("email", "input-hackathon");
+        addClass("email", "input-hackathon-error");
         valid = false;
     } else {
-        rmClass("email", "input-be4chat-error");
-        addClass("email", "input-be4chat");
+        rmClass("email", "input-hackathon-error");
+        addClass("email", "input-hackathon");
     }
 
     if(phone.length == 11){
-      rmClass("phone", "input-be4chat-error");
-      addClass("phone", "input-be4chat");
+      rmClass("phone", "input-hackathon-error");
+      addClass("phone", "input-hackathon");
     } else {
-      rmClass("phone", "input-be4chat");
-      addClass("phone", "input-be4chat-error");
+      rmClass("phone", "input-hackathon");
+      addClass("phone", "input-hackathon-error");
         valid = false;
     }
     return valid
@@ -170,7 +170,7 @@ function insertInput(msg){
 
 }
 
-document.querySelector('.textarea-be4chat').addEventListener('keypress',
+document.querySelector('.textarea-hackathon').addEventListener('keypress',
   function(e){
     if (e.keyCode == 13) {
         e.preventDefault();
@@ -179,11 +179,11 @@ document.querySelector('.textarea-be4chat').addEventListener('keypress',
     }
 });
 
-document.querySelector('.be4chat_logo_img').addEventListener('click',
+document.querySelector('.hackathon_logo_img').addEventListener('click',
 function(){
-    var msg = document.querySelector('.textarea-be4chat').value;
+    var msg = document.querySelector('.textarea-hackathon').value;
     insertInput(msg);
-    document.querySelector('.textarea-be4chat').value = '';
+    document.querySelector('.textarea-hackathon').value = '';
 });
 
 
@@ -220,7 +220,7 @@ function sendMsg(URL, data) {
           if(json.output.text[0].indexOf("protocolo ") >= 0){
             msgPush.parentNode.insertBefore(createElementMsg("Aguarde mais um instante.", "msg_a"), msgPush);
             sendMsg(URL, { "text": 'boleto_atrasado'});
-            document.querySelector(".btn-be4chat-img").disabled = false;
+            document.querySelector(".btn-hackathon-img").disabled = false;
           }else{
             document.querySelector(".span-atendente").style.visibility = 'hidden'
           }
