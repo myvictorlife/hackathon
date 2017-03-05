@@ -8,11 +8,13 @@ var URL = "https://chatvictor.mybluemix.net/chat"
   // ***********************************************************************************************
   // *********************************   Abrir e Fechar Aba Chat   *********************************
   // ***********************************************************************************************
-  document.querySelector(".btn-be4chat-img").disabled = false;
+  document.querySelector(".btn-be4chat-img").disabled = true;
+
   var divs = document.querySelectorAll("#myprotocol, .btn-be4chat-img");
   divs[0].addEventListener('click', function(div) {
     document.querySelector(".btn-be4chat-img").disabled = true;
   });
+
 
   var divs = document.querySelectorAll(".chat_head, .arrow_down_img, .logo_img, .be4chat_logo_img");
   divs[0].addEventListener('click', function(div) {
@@ -200,6 +202,7 @@ function sendMsg(URL, data) {
           if(json.output.text[0].indexOf("protocolo ") >= 0){
             msgPush.parentNode.insertBefore(createElementMsg("Aguarde mais um instante.", "msg_a"), msgPush);
             sendMsg(URL, { "text": 'boleto_atrasado'});
+            document.querySelector(".btn-be4chat-img").disabled = false;
           }else{
             document.querySelector(".span-atendente").style.visibility = 'hidden'
           }
