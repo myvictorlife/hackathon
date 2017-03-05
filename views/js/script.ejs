@@ -156,7 +156,7 @@ function inicializedSendMsg(data) {
 
 function insertInput(msg){
 
-  if(msg == 'cliente_insatisfeito'){
+  if(msg.length >= 100){
     clientSadNess(URL);
   }else{
     sendMsg(URL, {text: msg})
