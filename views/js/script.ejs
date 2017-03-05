@@ -161,14 +161,12 @@ function insertInput(msg){
   }else{
     sendMsg(URL, {text: msg})
 
-    if(msg!=''){
+  }
+  if(msg!=''){
       var msgPush = document.getElementsByClassName("msg_push")[0];
         msgPush.parentNode.insertBefore(createElementMsg(msg, "msg_b"), msgPush);
     }
-    scrollTopChatBody();
-  
-  }
-  
+    scrollTopChatBody();  
 
 }
 
