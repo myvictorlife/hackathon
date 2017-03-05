@@ -1,12 +1,20 @@
 var be4_chat_name, be4_chat_email, be4_chat_phone;
 
+//var URL = 'https://chat-l.mybluemix.net/personality';
+var URL = "https://chatvictor.mybluemix.net/chat"
 //document.addEventListener('DOMContentLoaded',function(){
   // document.getElementById("phone").onkeypress = validate_int;
   // document.getElementById("phone").onkeyup = phone_number_mask;
   // ***********************************************************************************************
   // *********************************   Abrir e Fechar Aba Chat   *********************************
   // ***********************************************************************************************
-  var divs = document.querySelectorAll(".chat_head, .arrow_down_img, .logo_img");
+  document.querySelector(".btn-be4chat-img").disabled = false;
+  var divs = document.querySelectorAll("#myprotocol, .btn-be4chat-img");
+  divs[0].addEventListener('click', function(div) {
+    document.querySelector(".btn-be4chat-img").disabled = true;
+  });
+
+  var divs = document.querySelectorAll(".chat_head, .arrow_down_img, .logo_img, .be4chat_logo_img");
   divs[0].addEventListener('click', function(div) {
     slideToggle();
     
@@ -82,20 +90,6 @@ var be4_chat_name, be4_chat_email, be4_chat_phone;
     }, false);
   }
 
-  // document.querySelector('.startchat').addEventListener('click',function(){
-
-  //   var name = document.getElementById('name').value;
-  //   var email = document.getElementById('email').value;
-  //   var phone = document.getElementById('phone').value.replace('(','').replace(')','').replace(' ','').replace('-','');
-
-  //   if(validate(name, email, phone)){
-  //     document.querySelector(".inputs").remove();
-  //     // Iniciar conexão com chat (websocket)
-  //     connectWebSocket(name, email, phone)
-  //   }
-  //  });
-  //document.querySelector(".inputs").remove();
-
   document.querySelector('#myprotocol').addEventListener('click',function(){
 
     var xhttp = new XMLHttpRequest();
@@ -133,36 +127,9 @@ var be4_chat_name, be4_chat_email, be4_chat_phone;
 
     return day + ' ' + monthNames[monthIndex] + ' ' + year;
   }
-  // ***********************************************************************************************
-// *****************************************WEBSOCKET*********************************************
-// ***********************************************************************************************
 
-// function connectWebSocket(name, email, phone){
-//     be4_chat_name = name
-//     be4_chat_email = email
-//     be4_chat_phone = phone
-
-//     var webSocket = io.connect(URL, { uuid: be4_chat_phone, 'forceNew': true, perMessageDeflate: false})
-
-//     webSocket.on("connect", function(){
-//       console.log('Websocket aberto: ' + be4_chat_phone);
-//       webSocket.send(be4_chat_phone);
-
-//       var data = {"message": "-- sem mensagem --", "uuid": be4_chat_phone, "name": be4_chat_name, "email": be4_chat_email, "phone": be4_chat_phone};
-//       sendMsg(URL+"/msg", data)
-//     });
-
-//     webSocket.on("message", function(msg){
-      
-//       var msgPush = document.getElementsByClassName("msg_push")[0];
-//       msgPush.parentNode.insertBefore(createElementMsg(msg, "msg_a"), msgPush);
-
-//       scrollTopChatBody();
-
-//     });
-// }
 inicializedSendMsg();
-function inicializedSendMsg(URL, data) {
+function inicializedSendMsg(data) {
   document.querySelector(".span-atendente").style.visibility = 'visible';
   var xhttp = new XMLHttpRequest();
   xhttp.onreadystatechange = function() {
@@ -180,14 +147,14 @@ function inicializedSendMsg(URL, data) {
       }
     }
   };
-  xhttp.open("POST", "https://chatvictor.mybluemix.net/chat", true);
+  xhttp.open("POST", URL, true);
   xhttp.setRequestHeader("Content-type", "application/json");
   xhttp.send(JSON.stringify({ "text": "bom dia"}));
 }
 
 function insertInput(msg){
   console.log(data)
-  sendMsg("https://chatvictor.mybluemix.net/chat", {text: msg})
+  sendMsg(URL, {text: msg})
 
   if(msg!=''){
     var msgPush = document.getElementsByClassName("msg_push")[0];
@@ -227,13 +194,19 @@ function sendMsg(URL, data) {
       var msgPush = document.getElementsByClassName("msg_push")[0];
       if(json.output.text.length !== 0){
         
-        
         setTimeout(function(resp){
           msgPush.parentNode.insertBefore(createElementMsg(json.output.text, "msg_a"), msgPush);
-          document.querySelector(".span-atendente").style.visibility = 'hidden'
+
+          if(json.output.text[0].indexOf("protocolo ") >= 0){
+            msgPush.parentNode.insertBefore(createElementMsg("Aguarde mais um instante.", "msg_a"), msgPush);
+            sendMsg(URL, { "text": 'boleto_atrasado'});
+          }else{
+            document.querySelector(".span-atendente").style.visibility = 'hidden'
+          }
+
           scrollTopChatBody();
         }, 3000);
-        
+
       }
     }
   };
