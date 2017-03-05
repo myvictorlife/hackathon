@@ -15,7 +15,7 @@ var be4_chat_name, be4_chat_email, be4_chat_phone;
     if(transform != ''){
       document.getElementById("arrow_img").style.transform = transform;
       document.querySelector(".chat_head").style.width = '50%'; 
-      document.querySelector(".be4chat_logo_img").style.visibility = 'hidden'; 
+      document.querySelector(".be4chat_logo_img").style.visibility = 'hidden';
       document.querySelector(".arrow_down_img").style.right = '95px';
       document.querySelector(".chat_box").style.right = '-60px';
       
@@ -163,6 +163,7 @@ var be4_chat_name, be4_chat_email, be4_chat_phone;
 // }
 inicializedSendMsg();
 function inicializedSendMsg(URL, data) {
+  document.querySelector(".span-atendente").style.visibility = 'visible';
   var xhttp = new XMLHttpRequest();
   xhttp.onreadystatechange = function() {
     if (this.readyState == 4 && this.status == 200) {
@@ -171,7 +172,11 @@ function inicializedSendMsg(URL, data) {
       var msgPush = document.getElementsByClassName("msg_push")[0];
       console.log(json);
       if(json.output.text.length !== 0){
-        msgPush.parentNode.insertBefore(createElementMsg(json.output.text, "msg_a"), msgPush);
+        setTimeout(function(resp){
+          msgPush.parentNode.insertBefore(createElementMsg(json.output.text, "msg_a"), msgPush);
+          document.querySelector(".span-atendente").style.visibility = 'hidden'
+          scrollTopChatBody();
+        }, 3000);
       }
     }
   };
@@ -212,6 +217,7 @@ function(){
  //});
 
 function sendMsg(URL, data) {
+  document.querySelector(".span-atendente").style.visibility = 'visible';
   var xhttp = new XMLHttpRequest();
   xhttp.onreadystatechange = function() {
     if (this.readyState == 4 && this.status == 200) {
@@ -220,7 +226,14 @@ function sendMsg(URL, data) {
       console.log(json);
       var msgPush = document.getElementsByClassName("msg_push")[0];
       if(json.output.text.length !== 0){
-        msgPush.parentNode.insertBefore(createElementMsg(json.output.text, "msg_a"), msgPush);
+        
+        
+        setTimeout(function(resp){
+          msgPush.parentNode.insertBefore(createElementMsg(json.output.text, "msg_a"), msgPush);
+          document.querySelector(".span-atendente").style.visibility = 'hidden'
+          scrollTopChatBody();
+        }, 3000);
+        
       }
     }
   };
@@ -272,6 +285,7 @@ function createElementMsg(msg, nameClass){
 }
 
 function scrollTopChatBody(){
+  console.log("entrei")
   var scroll = document.getElementsByClassName("msg_body")[0];
   scroll.scrollTop = scroll.scrollHeight;
 }

@@ -26,7 +26,7 @@ body {
  /* Espaço chat deve ficar lado esquedo da página */
  --right-chat: 20px;
  --width-chat: 350px;
- --height-chat: 365px;
+ --height-chat: 380px;
  --height-footer-textarea: 272px; /* deve ter 68px a menos do que "height-chat" */
 
 --color-user-a: rgba(128, 128, 128, 0.06);
@@ -112,7 +112,7 @@ body {
 	font-size: var(--font-size-chat);
   font-family: "Roboto",sans-serif;
 	color: var(--text-color-user-a);
-  width: 200px;
+  width: 175px;
 }
 .msg_a:before{
 	/*content:"";*/
@@ -213,7 +213,10 @@ body {
   padding-right: 5px;
 }
 
-
+.span-atendente {
+  margin-left: 7px;
+  color: #A0A0A0;
+}
 
 /************************************************************************************************/
 /************************************************************************************************/
