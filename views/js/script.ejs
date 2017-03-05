@@ -1,8 +1,8 @@
 var be4_chat_name, be4_chat_email, be4_chat_phone;
 
 //document.addEventListener('DOMContentLoaded',function(){
-  document.getElementById("phone").onkeypress = validate_int;
-  document.getElementById("phone").onkeyup = phone_number_mask;
+  // document.getElementById("phone").onkeypress = validate_int;
+  // document.getElementById("phone").onkeyup = phone_number_mask;
   // ***********************************************************************************************
   // *********************************   Abrir e Fechar Aba Chat   *********************************
   // ***********************************************************************************************
@@ -82,19 +82,19 @@ var be4_chat_name, be4_chat_email, be4_chat_phone;
     }, false);
   }
 
-  document.querySelector('.startchat').addEventListener('click',function(){
+  // document.querySelector('.startchat').addEventListener('click',function(){
 
-    var name = document.getElementById('name').value;
-    var email = document.getElementById('email').value;
-    var phone = document.getElementById('phone').value.replace('(','').replace(')','').replace(' ','').replace('-','');
+  //   var name = document.getElementById('name').value;
+  //   var email = document.getElementById('email').value;
+  //   var phone = document.getElementById('phone').value.replace('(','').replace(')','').replace(' ','').replace('-','');
 
-    if(validate(name, email, phone)){
-      document.querySelector(".inputs").remove();
-      // Iniciar conexão com chat (websocket)
-      connectWebSocket(name, email, phone)
-    }
-   });
-  document.querySelector(".inputs").remove();
+  //   if(validate(name, email, phone)){
+  //     document.querySelector(".inputs").remove();
+  //     // Iniciar conexão com chat (websocket)
+  //     connectWebSocket(name, email, phone)
+  //   }
+  //  });
+  //document.querySelector(".inputs").remove();
 
   document.querySelector('#myprotocol').addEventListener('click',function(){
 
@@ -137,35 +137,52 @@ var be4_chat_name, be4_chat_email, be4_chat_phone;
 // *****************************************WEBSOCKET*********************************************
 // ***********************************************************************************************
 
-function connectWebSocket(name, email, phone){
-    be4_chat_name = name
-    be4_chat_email = email
-    be4_chat_phone = phone
+// function connectWebSocket(name, email, phone){
+//     be4_chat_name = name
+//     be4_chat_email = email
+//     be4_chat_phone = phone
 
-    var webSocket = io.connect(URL, { uuid: be4_chat_phone, 'forceNew': true, perMessageDeflate: false})
+//     var webSocket = io.connect(URL, { uuid: be4_chat_phone, 'forceNew': true, perMessageDeflate: false})
 
-    webSocket.on("connect", function(){
-      console.log('Websocket aberto: ' + be4_chat_phone);
-      webSocket.send(be4_chat_phone);
+//     webSocket.on("connect", function(){
+//       console.log('Websocket aberto: ' + be4_chat_phone);
+//       webSocket.send(be4_chat_phone);
 
-      var data = {"message": "-- sem mensagem --", "uuid": be4_chat_phone, "name": be4_chat_name, "email": be4_chat_email, "phone": be4_chat_phone};
-      sendMsg(URL+"/msg", data)
-    });
+//       var data = {"message": "-- sem mensagem --", "uuid": be4_chat_phone, "name": be4_chat_name, "email": be4_chat_email, "phone": be4_chat_phone};
+//       sendMsg(URL+"/msg", data)
+//     });
 
-    webSocket.on("message", function(msg){
+//     webSocket.on("message", function(msg){
       
+//       var msgPush = document.getElementsByClassName("msg_push")[0];
+//       msgPush.parentNode.insertBefore(createElementMsg(msg, "msg_a"), msgPush);
+
+//       scrollTopChatBody();
+
+//     });
+// }
+inicializedSendMsg();
+function inicializedSendMsg(URL, data) {
+  var xhttp = new XMLHttpRequest();
+  xhttp.onreadystatechange = function() {
+    if (this.readyState == 4 && this.status == 200) {
+      
+      var json = JSON.parse(this.responseText);
       var msgPush = document.getElementsByClassName("msg_push")[0];
-      msgPush.parentNode.insertBefore(createElementMsg(msg, "msg_a"), msgPush);
-
-      scrollTopChatBody();
-
-    });
+      console.log(json);
+      if(json.output.text.length !== 0){
+        msgPush.parentNode.insertBefore(createElementMsg(json.output.text, "msg_a"), msgPush);
+      }
+    }
+  };
+  xhttp.open("POST", "https://chatvictor.mybluemix.net/chat", true);
+  xhttp.setRequestHeader("Content-type", "application/json");
+  xhttp.send(JSON.stringify({ "text": "bom dia"}));
 }
 
 function insertInput(msg){
-
-  var data = {"message": msg, "uuid": be4_chat_phone, "name": be4_chat_name, "email": be4_chat_email, "phone": be4_chat_phone};
-  sendMsg(URL+"/msg", data)
+  console.log(data)
+  sendMsg("https://chatvictor.mybluemix.net/chat", {text: msg})
 
   if(msg!=''){
     var msgPush = document.getElementsByClassName("msg_push")[0];
@@ -184,7 +201,7 @@ document.querySelector('.textarea-be4chat').addEventListener('keypress',
     }
 });
 
-document.querySelector('.msg_send_img').addEventListener('click',
+document.querySelector('.be4chat_logo_img').addEventListener('click',
 function(){
     var msg = document.querySelector('.textarea-be4chat').value;
     insertInput(msg);
@@ -198,7 +215,13 @@ function sendMsg(URL, data) {
   var xhttp = new XMLHttpRequest();
   xhttp.onreadystatechange = function() {
     if (this.readyState == 4 && this.status == 200) {
-      //console.log(this.responseText)
+      
+      var json = JSON.parse(this.responseText);
+      console.log(json);
+      var msgPush = document.getElementsByClassName("msg_push")[0];
+      if(json.output.text.length !== 0){
+        msgPush.parentNode.insertBefore(createElementMsg(json.output.text, "msg_a"), msgPush);
+      }
     }
   };
   xhttp.open("POST", URL, true);

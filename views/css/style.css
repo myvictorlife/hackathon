@@ -29,12 +29,15 @@ body {
  --height-chat: 365px;
  --height-footer-textarea: 272px; /* deve ter 68px a menos do que "height-chat" */
 
+--color-user-a: rgba(128, 128, 128, 0.06);
+
+--color-user-b: rgba(144, 191, 46, 0.30);
  /* Cor do balão do usuário 'a' */
- --color-user-a: white;
+
  /* Cor do texto do usuário 'a' */
  --text-color-user-a: black;
  /* Cor do balão do usuário 'b' */
- --color-user-b: white;
+
  /* Cor do texto do usuário 'b' */
  --text-color-user-: black;
 
@@ -120,6 +123,7 @@ body {
 	border-color: transparent var(--color-user-a) transparent transparent;
 	left:-20px;
 	top:7px;
+  box-shadow: 1px 2px 3px #A9A7A7
 }
 
 
@@ -147,6 +151,7 @@ body {
 	border-color: transparent transparent transparent var(--color-user-b);
 	right:-20px;
 	top:7px;
+  box-shadow: 1px 2px 3px #A9A7A7
 }
 
 
